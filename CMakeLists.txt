@@ -2,10 +2,9 @@ cmake_minimum_required(VERSION 3.28)
 
 project(md_converter VERSION 1.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(CMAKE_CONFIGURATION_TYPES Debug Release)
 message("Generated with config types: ${CMAKE_CFG_INTDIR}")
 
 # set(CMAKE_VERBOSE_MAKEFILE TRUE)
@@ -22,7 +21,7 @@ set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/build/$<CONFIG>")
 
 set(SOURCES main.cpp)
 
-set(BUILD_MD2HTML_EXECUTABLE OFF CACHE BOOL "Disable md2html executable build" FORCE)
+# set(BUILD_MD2HTML_EXECUTABLE OFF CACHE BOOL "Disable md2html executable build" FORCE)
 
 add_subdirectory(md4c EXCLUDE_FROM_ALL)
 
