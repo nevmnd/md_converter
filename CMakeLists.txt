@@ -27,7 +27,7 @@ add_subdirectory(md4c EXCLUDE_FROM_ALL)
 
 add_executable(md_converter ${SOURCES})
 
-target_link_libraries(md_converter md4c)
+target_link_libraries(md_converter md4c md4c-html)
 
 include_directories("${PROJECT_SOURCE_DIR}/md4c/src")
 
