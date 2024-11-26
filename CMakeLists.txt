@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 message("Generated with config types: ${CMAKE_CFG_INTDIR}")
 
-# set(CMAKE_VERBOSE_MAKEFILE TRUE)
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
@@ -21,7 +19,7 @@ set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/build/$<CONFIG>")
 
 set(SOURCES main.cpp)
 
-# set(BUILD_MD2HTML_EXECUTABLE OFF CACHE BOOL "Disable md2html executable build" FORCE)
+set(BUILD_MD2HTML_EXECUTABLE OFF CACHE BOOL "Disable md2html executable build" FORCE)
 
 add_subdirectory(md4c EXCLUDE_FROM_ALL)
 
