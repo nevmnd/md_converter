@@ -120,21 +120,21 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    std::string input_file = parser.positionalArgs()[0];
-    std::cout << "Input file:  " << input_file << std::endl;
-    if (!std::filesystem::exists(input_file)) {
+    std::string md_file = parser.positionalArgs()[0];
+    std::cout << "Input file:  " << md_file << std::endl;
+    if (!std::filesystem::exists(md_file)) {
         std::cout << "Input file doesn't exist. Exiting..." << std::endl;
         std::exit(1);
     }
-    FileHandler in = safeOpenFile(input_file, std::ios::in);
-    std::string output_file = parser.positionalArgs()[1];
-    std::cout << "Output file: " << output_file << std::endl;
+    FileHandler in = safeOpenFile(md_file, std::ios::in);
+    std::string html_file = parser.positionalArgs()[1];
+    std::cout << "Output file: " << html_file << std::endl;
     // Remove the file as output will be appended by pieces
-    if (std::filesystem::exists(output_file)) {
+    if (std::filesystem::exists(html_file)) {
         std::cout << "Output file exists. Removing it..." << std::endl;
-        std::filesystem::remove(output_file);
+        std::filesystem::remove(html_file);
     }
-    FileHandler out = safeOpenFile(output_file, std::ios::app);
+    FileHandler out = safeOpenFile(html_file, std::ios::app);
     outPtr = &out;
     if (parser.has("c")) {
         css_file = parser.get("c");
@@ -144,21 +144,22 @@ int main(int argc, char* argv[]) {
             std::exit(1);
         }
     }
-    std::string input_buffer = in.readFile();
+    std::string md_buffer = in.readFile();
     out.writeLine("<!DOCTYPE html>");
     out.writeLine("<html>");
     out.writeLine("<head>");
     out.writeLine("<title></title>");
+    out.writeLine("<meta charset=\"UTF-8\" />");
     if (!css_file.empty()) {
         out.writeLine(std::format("<link rel=\"stylesheet\" href=\"{}\">", css_file));
     }
     out.writeLine("</head>");
     out.writeLine("<body>");
-    ret = md_html(input_buffer.c_str(), input_buffer.size(), process_output, NULL, MD_DIALECT_COMMONMARK, MD_HTML_FLAG_DEBUG | MD_HTML_FLAG_SKIP_UTF8_BOM);
+    ret = md_html(md_buffer.c_str(), md_buffer.size(), process_output, NULL, MD_DIALECT_COMMONMARK, MD_HTML_FLAG_DEBUG | MD_HTML_FLAG_SKIP_UTF8_BOM);
     out.writeLine("</body>");
     out.writeLine("</html>");
     std::cout << "Done!" << std::endl;
-    std::cout << "Output file is " << output_file << std::endl;
+    std::cout << "Output file is " << html_file << std::endl;
 
     return 0;
 }
